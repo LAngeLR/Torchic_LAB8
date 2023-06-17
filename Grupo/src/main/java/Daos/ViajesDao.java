@@ -114,4 +114,44 @@ public class ViajesDao extends BaseDao{
         }
         return listaDeViajes;
     }
+
+    public void crearViaje(Viajes viajes) {
+
+        String sql = "INSERT INTO viajes (idviajes, fecha_reserva, fecha_viaje, ciudad_origen, ciudad_destino, empresa_seguro, cantidad_boletos, costo_total) VALUES (?,?,?,?,?,?,?,?)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+
+            pstmt.setInt(1, viajes.getIdViaje());
+            pstmt.setDate(2, (Date) viajes.getFechaReserva());
+            pstmt.setDate(3, (Date) viajes.getFechaViaje());
+            pstmt.setString(4, viajes.getCiudadOrigen());
+            pstmt.setString(5, viajes.getCiudadDestino());
+            pstmt.setString(6, viajes.getEmpresaSeguro());
+            pstmt.setInt(7, viajes.getCantBoletos());
+            pstmt.setInt(8,viajes.getCostoTotal());
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void borrarViaje(String id) {
+
+        String sql = "DELETE from viajes WHERE idviajes = ?";
+
+        try(Connection connection = getConnection();
+            PreparedStatement pstmt=connection.prepareStatement(sql))
+        {
+
+            pstmt.setString(1,id);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
