@@ -4,15 +4,12 @@ import Beans.Viajes;
 import Beans.Usuario;
 import Beans.Status;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ViajesDao extends BaseDao{
 
-    public ArrayList<Viajes> listarviajes(){
+    public ArrayList<Viajes> listarViajes(){
 
         ArrayList<Viajes> listaDeViajes = new ArrayList<>();
 
@@ -64,4 +61,57 @@ public class ViajesDao extends BaseDao{
         viaje.setUsuario(usuario);
     }
 
+    public ArrayList<Viajes> busquedaCiudadOrigen(String ciudadOrigen) {
+
+        ArrayList<Viajes> listaDeViajes = new ArrayList<>();
+
+        String sql = "SELECT * FROM viajes WHERE lower(ciudad_origen) like ?";
+
+        try(Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, "%"+ciudadOrigen+"%");
+
+            try (ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()){
+                    Viajes viajes = new Viajes();
+
+                    fetchViajesData(viajes, rs);
+
+                    listaDeViajes.add(viajes);
+                }
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
+
+        return listaDeViajes;
+    }
+
+    public ArrayList<Viajes> busquedaCiudadDestino(String ciudadDestino) {
+
+        ArrayList<Viajes> listaDeViajes = new ArrayList<>();
+
+        String sql = "SELECT * FROM viajes WHERE lower(ciudad_destino) like ?";
+
+        try(Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, "%"+ciudadDestino+"%");
+
+            try (ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()){
+                    Viajes viajes = new Viajes();
+
+                    fetchViajesData(viajes, rs);
+                    listaDeViajes.add(viajes);
+
+                }
+            }
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
+        return listaDeViajes;
+    }
 }
