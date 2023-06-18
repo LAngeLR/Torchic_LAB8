@@ -1,7 +1,7 @@
 package Daos;
 
 import Beans.Viajes;
-import Beans.Usuario;
+import Beans.Usuarios;
 import Beans.Status;
 
 import java.sql.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ViajesDao extends BaseDao{
 
-    public ArrayList<Viajes> listarViajes(){
+    public ArrayList<Viajes> listarViajes(int codigo){
 
         ArrayList<Viajes> listaDeViajes = new ArrayList<>();
 
@@ -42,8 +42,8 @@ public class ViajesDao extends BaseDao{
         viaje.setCostoTotal(rs.getInt(8));
         viaje.setEmpresaSeguro(rs.getString(6));
 
-        Usuario usuario = new Usuario();
-        usuario.setIdusuario(rs.getInt(9));
+        Usuarios usuario = new Usuarios();
+
         usuario.setNombre(rs.getString(10));
         usuario.setApellido(rs.getString(11));
         usuario.setEdad(rs.getInt(12));
@@ -51,13 +51,8 @@ public class ViajesDao extends BaseDao{
         usuario.setCorreopucp(rs.getString(14));
         usuario.setEspecialidad(rs.getString(15));
         usuario.setContrasenia(rs.getString(16));
+        usuario.setStatus(rs.getString(17));
 
-        Status status = new Status();
-        status.setIdstatus(rs.getInt(17));
-        status.setStatus(rs.getString(18));
-        status.setGasto_asociado_min(rs.getInt(19));
-
-        usuario.setStatus(status);
         viaje.setUsuario(usuario);
     }
 
