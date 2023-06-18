@@ -11,7 +11,7 @@ public class Viajes {
     private String empresaSeguro;
     private int cantBoletos;
     private int costoTotal;
-    private Usuarios usuario;
+    private Usuario usuario;
 
     public int getIdViaje() {
         return idViaje;
@@ -77,11 +77,11 @@ public class Viajes {
         this.costoTotal = costoTotal;
     }
 
-    public Usuarios getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuarios usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 }

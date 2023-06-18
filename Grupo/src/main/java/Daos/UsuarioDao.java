@@ -5,20 +5,18 @@ import java.sql.*;
 
 public class UsuarioDao extends BaseDao {
     public void crear(Usuario usuario){
-        String sql="insert into usuario (nombre,apellido,edad,codigopucp,correopucp,especialidad,contrasenia) values \n" +
+        String sql="insert into usuario (codigopucp, nombre, apellido, edad, correopucp, especialidad, contrasenia) values \n" +
                 "(?,?,?,?,?,?,sha2(?,256));";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
-            pstmt.setString(1, usuario.getNombre());
-            pstmt.setString(2, usuario.getApellido());
-            pstmt.setInt(3, usuario.getEdad());
-            pstmt.setInt(4, usuario.getCodigopucp());
+            pstmt.setString(1, usuario.getCodigopucp());
+            pstmt.setString(2, usuario.getNombre());
+            pstmt.setString(3, usuario.getApellido());
+            pstmt.setInt(4, usuario.getEdad());
             pstmt.setString(5, usuario.getCorreopucp());
             pstmt.setString(6, usuario.getEspecialidad());
             pstmt.setString(7, usuario.getContrasenia());
-
-            //no se si poner status en usuario o hacer lo de status status nomas
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -29,7 +27,7 @@ public class UsuarioDao extends BaseDao {
     public Usuario obtenerUsuario(String idusuario){
         Usuario usuario = null;
 
-        String sql = "SELECT * from usuario WHERE idusuario = ?";
+        String sql = "SELECT * from usuario where codigopucp = ?";
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -38,16 +36,14 @@ public class UsuarioDao extends BaseDao {
             try (ResultSet rs = pstmt.executeQuery();) {
                 while(rs.next()){
                     usuario = new Usuario();
-                    usuario.setIdusuario(rs.getInt(1));
+                    usuario.setCodigopucp(rs.getString(1));
                     usuario.setNombre(rs.getString(2));
                     usuario.setApellido(rs.getString(3));
                     usuario.setEdad(rs.getInt(4));
-                    usuario.setCodigopucp(rs.getInt(5));
-                    usuario.setCorreopucp(rs.getString(6));
-                    usuario.setEspecialidad(rs.getString(7));
-                    usuario.setContrasenia(rs.getString(8));
-                    //usuario.setStatus(rs.getInt(10));
-
+                    usuario.setCorreopucp(rs.getString(5));
+                    usuario.setEspecialidad(rs.getString(6));
+                    usuario.setContrasenia(rs.getString(7));
+                    usuario.setStatus(rs.getString(8));
                 }
             }
 

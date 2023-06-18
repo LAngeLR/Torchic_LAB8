@@ -24,72 +24,84 @@
 </head>
 
 <body style="background-image: url('recursos/img/Login.jpg'); background-size: cover;">
-<div class="container">
+    <div class="container">
 
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
 
-        <div class="col-xl-5 col-lg-5 col-md-9">
+            <div class="col-xl-5 col-lg-5 col-md-9">
 
-            <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0">
-                    <!-- Nested Row within Card Body -->
-                    <div class="row">
-                        <div class="w-100">
-                            <div class="p-5">
-                                <img src="recursos/img/logo.png" class="w-100" alt="">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="w-100">
+                                <div class="p-5">
+                                    <img src="recursos/img/logo.png" class="w-100" alt="">
 
-                                <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Bienvenido</h1>
-                                </div>
-                                <form class="user">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control"
-                                               id="exampleInputEmail" aria-describedby="emailHelp"
-                                               placeholder="Correo Electrónico">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Bienvenido</h1>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control"
-                                               id="exampleInputPassword" placeholder="Contraseña">
-                                    </div>
-                                    <div class="form-group">
-                                    </div>
-                                    <a href="../ZUsuario/index.html" class="btn btn-primary btn-control btn-block">
-                                        Login
-                                    </a>
+
+                                    <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?action=ingresar">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control"
+                                                   id="exampleInputEmail" aria-describedby="emailHelp"
+                                                   placeholder="Correo Electrónico">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control"
+                                                   id="exampleInputPassword" placeholder="Contraseña">
+                                        </div>
+
+                                        <% if (request.getParameter("errorEspecialidad") != null) { %>
+                                        <div class="text-danger mb-2">No es de la especialidad de Telecomunicaciones</div>
+                                        <%}%>
+
+                                        <% if (request.getParameter("error") != null) { %>
+                                        <div class="text-danger mb-2">Error en usuario o contraseña</div>
+                                        <%}%>
+
+                                        <div class="form-group">
+                                        </div>
+
+                                        <a class="btn btn-primary btn-control btn-block">
+                                            Login
+                                        </a>
+                                        <hr>
+                                        <a href="<%=request.getContextPath()%>/UsuarioServlet?action=registrar" class="btn btn-primary btn-control btn-block">
+                                            Crear una cuenta nueva
+                                        </a>
+                                        <hr>
+                                    </form>
                                     <hr>
-                                    <a href="../ZUsuario/index.html" class="btn btn-primary btn-control btn-block">
-                                        Crear una cuenta nueva
-                                    </a>
-                                    <hr>
-                                </form>
-                                <hr>
-                                <div class="text-center">
+                                    <div class="text-center">
 
-                                </div>
-                                <div class="text-center">
+                                    </div>
+                                    <div class="text-center">
 
+                                    </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
 
     </div>
 
-</div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="recursos/vendor/jquery/jquery.min.js"></script>
+    <script src="recursos/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Bootstrap core JavaScript-->
-<script src="recursos/vendor/jquery/jquery.min.js"></script>
-<script src="recursos/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="recursos/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="recursos/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="recursos/js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="recursos/js/sb-admin-2.min.js"></script>
 </body>
 
 </html>

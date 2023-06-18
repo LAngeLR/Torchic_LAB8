@@ -1,22 +1,22 @@
 package Beans;
 
 public class Usuario {
-    private int idusuario;
-    private String nombre;
-    private String apellido;
-    private int edad;
-    private int codigopucp;
-    private String correopucp;
-    private String especialidad;
-    private String contrasenia;
-    private Status status;
+   private String codigopucp;
+   private String nombre;
+   private String apellido;
+   private int edad;
+   private String correopucp;
+   private String especialidad;
+   private String contrasenia;
+   private String status;
 
-    public int getIdusuario() {
-        return idusuario;
+
+    public String getCodigopucp() {
+        return codigopucp;
     }
 
-    public void setIdusuario(int idusuario) {
-        this.idusuario = idusuario;
+    public void setCodigopucp(String codigopucp) {
+        this.codigopucp = codigopucp;
     }
 
     public String getNombre() {
@@ -43,14 +43,6 @@ public class Usuario {
         this.edad = edad;
     }
 
-    public int getCodigopucp() {
-        return codigopucp;
-    }
-
-    public void setCodigopucp(int codigopucp) {
-        this.codigopucp = codigopucp;
-    }
-
     public String getCorreopucp() {
         return correopucp;
     }
@@ -75,11 +67,11 @@ public class Usuario {
         this.contrasenia = contrasenia;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

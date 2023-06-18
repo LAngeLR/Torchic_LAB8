@@ -28,7 +28,7 @@ public class UsuarioServlet extends HttpServlet {
 
             case "login":
                 Usuario usuario = (Usuario) session.getAttribute("UsuarioLog");
-                if (usuario != null && (usuario.getIdusuario()) != 0) {
+                if (usuario != null && Integer.parseInt(usuario.getCodigopucp()) != 0) {
                     response.sendRedirect(request.getContextPath() + "/viajesServlet");
                 } else {
                     requestDispatcher = request.getRequestDispatcher("index.jsp");
@@ -42,54 +42,71 @@ public class UsuarioServlet extends HttpServlet {
                 break;
 
             case "registrar":
-                Usuario usuario1 = new Usuario();
-                String idusuario = request.getParameter("idusuario");
-                String nombre = request.getParameter("nicknameTrabajador");
-                String apellido = request.getParameter("nombreTrabajador");
-                String edad = request.getParameter("apellidoTrabajador");
-                String codigopucp = request.getParameter("correo");
-                String correopucp = request.getParameter("contrasenia");
-                String especialidad = request.getParameter("especialidad");
-                String contrasenia = request.getParameter("contrasenia");
-
-                usuarioDao.crear(usuario1);
-                response.sendRedirect(request.getContextPath());
-
+                requestDispatcher = request.getRequestDispatcher("Login/registro.jsp");
+                requestDispatcher.forward(request, response);
                 break;
         }
 
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String correopucp = req.getParameter("inputcorreo");
-        String contrasenia= req.getParameter("inputcontrasenia");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //String correopucp = request.getParameter("correo");
+        //String contrasenia= request.getParameter("contrasenia");
 
         UsuarioDao usuarioDao = new UsuarioDao();
-        RequestDispatcher view;
+        RequestDispatcher requestDispatcher;
 
-        String action = req.getParameter("action") == null ? "ingresar" : req.getParameter("action");
+        String action = request.getParameter("action") == null ? "ingresar" : request.getParameter("action");
 
         switch (action) {
             case "ingresar":
-                Usuario usuario = usuarioDao.validar(correopucp, contrasenia);
+                String correo = request.getParameter("correo");
+                String password = request.getParameter("password");
+                RequestDispatcher view;
+
+                Usuario usuario = usuarioDao.validar(correo, password);
 
                 if (usuario != null) {
-                    HttpSession session = req.getSession();
-                    session.setAttribute("usuarioSession", usuario);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("usuarioLogueado", usuario);
+                    //session.setMaxInactiveInterval(900);
 
-                    //session.setMaxInactiveInterval(300);
+                    view = request.getRequestDispatcher("viajes/list.jsp");
+                    view.forward(request, response);
 
-                    resp.sendRedirect(req.getContextPath());
-                } else {
-                    req.setAttribute("error", "Usuario o contrasenia incorrectos");
-                    req.getRequestDispatcher("index.jsp").forward(req, resp);
+                    Usuario usuario1 = new Usuario();
+                    if(usuario1.getEspecialidad() != "ingeniería de Telecomunicaciones") {
+                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?errorEspecialidad");
+                    }
+                }
+                else  {
+                    response.sendRedirect(request.getContextPath() + "/UsuarioServlet?error");
                 }
                 break;
 
-            case "agregar":
-                view = req.getRequestDispatcher("/registro_usuario.jsp");
-                view.forward(req,resp);
+            case "crear":
+                Usuario usuario1 = new Usuario();
+                String codigo= request.getParameter("codigo");
+                String nombre = request.getParameter("nombre");
+                String apellido = request.getParameter("apellido");
+                int edad = Integer.parseInt(request.getParameter("edad"));
+                String correo1 = request.getParameter("correo");
+                String especialidad = request.getParameter("especialidad");
+                String password1 = request.getParameter("password");
+
+                usuario1.setCodigopucp(codigo);
+                usuario1.setNombre(nombre);
+                usuario1.setApellido(apellido);
+                usuario1.setEdad(edad);
+                usuario1.setCorreopucp(correo1);
+                usuario1.setEspecialidad(especialidad);
+                usuario1.setContrasenia(password1);
+
+                usuarioDao.crear(usuario1);
+
+                response.sendRedirect(request.getContextPath() + "/UsuarioServlet?registro");
+
                 break;
         }
 
