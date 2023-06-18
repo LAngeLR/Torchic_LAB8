@@ -49,6 +49,7 @@
         <div class="form-group">
           <label for="nombre">Nombre:</label>
           <input type="text" class="form-control" id="nombre" name="nombre" required="required" placeholder="Ingrese su nombre">
+          <small class="error-message" id="nombre-error"></small>
         </div>
 
         <div class="form-group">
@@ -59,16 +60,19 @@
         <div class="form-group">
           <label for="edad">Edad:</label>
           <input type="number" class="form-control" id="edad" name="edad" required="required" placeholder="Ingrese su edad">
+          <small class="error-message" id="edad-error"></small>
         </div>
 
         <div class="form-group">
           <label for="codigo">Código PUCP:</label>
           <input type="number" class="form-control" id="codigo" name="codigo" required="required" placeholder="Ingrese su código PUCP">
+          <small class="error-message" id="codigo-error"></small>
         </div>
 
         <div class="form-group">
           <label for="correo">Correo PUCP:</label>
           <input type="email" class="form-control" id="correo" name="correo" required="required" placeholder="Ingrese su correo">
+          <small class="error-message" id="correo-error"></small>
         </div>
 
         <div class="form-group">
@@ -79,11 +83,13 @@
         <div class="form-group">
           <label for="password">Contraseña:</label>
           <input type="password" class="form-control" id="password" name="password" required="required" placeholder="Ingrese su contraseña">
+          <small class="error-message" id="password-error"></small>
         </div>
 
         <div class="form-group">
-          <label for="confirmar-contrasena">Confirmar Contraseña:</label>
-          <input type="password" class="form-control" id="confirmar-contrasena" required="required" placeholder="Confirme su contraseña">
+          <label for="confirmar-password">Confirmar Contraseña:</label>
+          <input type="password" class="form-control" id="confirmar-password" required="required" placeholder="Confirme su contraseña">
+          <small class="error-message" id="confirmar-password-error"></small>
         </div>
 
         <button type="submit" class="btn btn-primary btn-register">Registrarse</button>
@@ -94,9 +100,12 @@
 
     <script>
       document.getElementById('registro-form').addEventListener('submit', function(event) {
-        var contrasenaInput = document.getElementById('contrasena');
-        var contrasenaError = document.getElementById('contrasena-error');
+        var contrasenaInput = document.getElementById('password');
+        var contrasenaError = document.getElementById('password-error');
         var contrasena = contrasenaInput.value;
+        var confirmarContrasenaInput = document.getElementById('confirmar-password');
+        var confirmarContrasenaError = document.getElementById('confirmar-password-error');
+        var confirmarContrasena = confirmarContrasenaInput.value;
 
         // Validar
         var uppercaseRegex = /[A-Z]/;
@@ -105,10 +114,70 @@
 
         if (!uppercaseRegex.test(contrasena) || !numberRegex.test(contrasena) || !specialCharRegex.test(contrasena)) {
           contrasenaError.textContent = 'La contraseña debe tener al menos una letra mayúscula, un número y un carácter especial';
-          event.preventDefault(); // Evitar el envío del formulario si la validación falla
+          event.preventDefault();
         } else {
           contrasenaError.textContent = '';
         }
+
+        // Validar que coinciden las contrasenias ingresadas
+        if (contrasena !== confirmarContrasena) {
+          confirmarContrasenaError.textContent = 'No coinciden las contraseñas';
+          event.preventDefault();
+        } else {
+          confirmarContrasenaError.textContent = '';
+        }
+
+        var nombreInput = document.getElementById('nombre');
+        var nombreError = document.getElementById('nombre-error');
+        var nombre = nombreInput.value;
+
+        // Validar que nombre no empiece con numeros
+        var startsWithNumberRegex = /^\d/;
+
+        if (startsWithNumberRegex.test(nombre)) {
+          nombreError.textContent = 'El nombre no es valido';
+          event.preventDefault();
+        } else {
+          nombreError.textContent = '';
+        }
+
+        var edadInput = document.getElementById('edad');
+        var edadError = document.getElementById('edad-error');
+        var edad = parseInt(edadInput.value);
+
+        if (isNaN(edad) || edad < 18 || edad >= 30) {
+          edadError.textContent = 'Edad no válida';
+          event.preventDefault();
+        } else {
+          edadError.textContent = '';
+        }
+
+        var codigoInput = document.getElementById('codigo');
+        var codigoError = document.getElementById('codigo-error');
+        var codigo = codigoInput.value;
+
+        var codeRegex = /^\d{8}$/;
+
+        if (!codeRegex.test(codigo)) {
+          codigoError.textContent = 'El código debe ser de 8 números';
+          event.preventDefault();
+        } else {
+          codigoError.textContent = '';
+        }
+
+        var correoInput = document.getElementById('correo');
+        var correoError = document.getElementById('correo-error');
+        var correo = correoInput.value;
+
+        var correoRegex = new RegExp('^a' + codigo + '@pucp\.edu\.pe$');
+
+        if (!correoRegex.test(correo)) {
+          correoError.textContent = 'El correo no es válido';
+          event.preventDefault();
+        } else {
+          correoError.textContent = '';
+        }
+
       });
     </script>
 

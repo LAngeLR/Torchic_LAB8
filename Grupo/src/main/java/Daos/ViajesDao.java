@@ -2,7 +2,6 @@ package Daos;
 
 import Beans.Viajes;
 import Beans.Usuario;
-import Beans.Status;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -54,6 +54,10 @@
                                                    id="exampleInputPassword" placeholder="Contraseña">
                                         </div>
 
+                                        <% if (request.getParameter("errorEspecialidad") != null) { %>
+                                        <div class="text-danger mb-2">No es de la especialidad de Telecomunicaciones</div>
+                                        <%}%>
+
                                         <% if (request.getParameter("error") != null) { %>
                                         <div class="text-danger mb-2">Error en usuario o contraseña</div>
                                         <%}%>

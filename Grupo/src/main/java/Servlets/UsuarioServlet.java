@@ -74,6 +74,11 @@ public class UsuarioServlet extends HttpServlet {
 
                     view = request.getRequestDispatcher("viajes/list.jsp");
                     view.forward(request, response);
+
+                    Usuario usuario1 = new Usuario();
+                    if(usuario1.getEspecialidad() != "ingeniería de Telecomunicaciones") {
+                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?errorEspecialidad");
+                    }
                 }
                 else  {
                     response.sendRedirect(request.getContextPath() + "/UsuarioServlet?error");
