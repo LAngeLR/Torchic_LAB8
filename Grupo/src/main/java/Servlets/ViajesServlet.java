@@ -19,6 +19,7 @@ import java.time.LocalDate;
 public class ViajesServlet extends HttpServlet {
 
     private ArrayList listaOpciones;
+    private ArrayList listaSeguros;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -93,12 +94,23 @@ public class ViajesServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
         RequestDispatcher view;
         ViajesDao viajesDao = new ViajesDao();
+
+        ArrayList<String> seguros = new ArrayList<>();
+
         String idViaje;
+
+        seguros.add("Rimac");
+        seguros.add("Pacifico");
+        seguros.add("La Positiva");
+        seguros.add("Seguro Internacional");
+        seguros.add("Otro");
+
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("CiudadDestino");
         opciones.add("CiudadOrigen");
 
         setListaOpciones(opciones);
+        setListaSeguros(seguros);
 
 
         switch (action) {
@@ -110,6 +122,7 @@ public class ViajesServlet extends HttpServlet {
                 view.forward(request, response);
                 break;
             case "crear":
+                request.setAttribute("listaSeguros", getListaSeguros());
                 view = request.getRequestDispatcher("/viajes/form.jsp");
                 view.forward(request, response);
                 break;
@@ -128,6 +141,14 @@ public class ViajesServlet extends HttpServlet {
 
     public void setListaOpciones(ArrayList listaOpciones) {
         this.listaOpciones = listaOpciones;
+    }
+
+    public ArrayList getListaSeguros() {
+        return listaSeguros;
+    }
+
+    public void setListaSeguros(ArrayList listaSeguros) {
+        this.listaSeguros = listaSeguros;
     }
 
 }
