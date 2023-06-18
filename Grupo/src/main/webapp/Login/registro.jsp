@@ -107,7 +107,6 @@
         var confirmarContrasenaError = document.getElementById('confirmar-password-error');
         var confirmarContrasena = confirmarContrasenaInput.value;
 
-        // Validar
         var uppercaseRegex = /[A-Z]/;
         var numberRegex = /[0-9]/;
         var specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
@@ -119,7 +118,6 @@
           contrasenaError.textContent = '';
         }
 
-        // Validar que coinciden las contrasenias ingresadas
         if (contrasena !== confirmarContrasena) {
           confirmarContrasenaError.textContent = 'No coinciden las contraseñas';
           event.preventDefault();
@@ -131,7 +129,7 @@
         var nombreError = document.getElementById('nombre-error');
         var nombre = nombreInput.value;
 
-        // Validar que nombre no empiece con numeros
+
         var startsWithNumberRegex = /^\d/;
 
         if (startsWithNumberRegex.test(nombre)) {
