@@ -59,6 +59,7 @@ public class ViajesServlet extends HttpServlet {
 
 
                 viajes.setIdViaje(Integer.parseInt(request.getParameter("IdViaje")));
+                viajes.setFechaReserva(Date.valueOf(request.getParameter("FechaReserva")));
                 viajes.setFechaViaje(Date.valueOf(request.getParameter("FechaViaje")));
                 viajes.setCiudadOrigen(request.getParameter("CiudadOrigen"));
                 viajes.setCiudadOrigen(request.getParameter("CiudadDestino"));
@@ -115,7 +116,8 @@ public class ViajesServlet extends HttpServlet {
 
         switch (action) {
             case "lista":
-                request.setAttribute("listarViajes", viajesDao.listarViajes());
+                String codigopucp = request.getParameter("codigopucp");
+                request.setAttribute("listarViajes", viajesDao.listarViajes(codigopucp));
                 request.setAttribute("listarFiltro", getListaOpciones());
 
                 view = request.getRequestDispatcher("/viajes/list.jsp");

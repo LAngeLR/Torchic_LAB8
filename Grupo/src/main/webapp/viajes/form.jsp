@@ -22,41 +22,53 @@
         </ul>
     </div>
 </nav>
-<div class='container'>
-    <div class="row mb-4">
-        <div class="col"></div>
-        <div class="col-md-6">
-            <h1 class='mb-3'>Crear un Viaje</h1>
-            <form method="POST" action="<%=request.getContextPath()%>/ViajesServlet?action=guardar">
 
-                <div class="form-group">
-                    <label>Fecha</label>
-                    <input required class="form-control datetimepicker" id="fecha" name="FechaViaje"
-                           type="date"/>
-                </div>
-
-                <div >
-                    <label>Seguro</label>
-                    <select required name="Seguro" id="Pais" placeholder="Seguro" class="form-control">
-                        <option value="">Seleccione una opción</option>
-                        <%for (int i=0;i<=listaSeguros.size()-1;i++){%>
-                        <option value="<%=listaSeguros.get(i)%>"><%=listaSeguros.get(i)%></option>
-                        <%}%>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Cantidad Boletos</label>
-                    <input required type="number" class="form-control" name="boletos">
-                </div>
-
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="<%=request.getContextPath()%>/ViajesServlet" class="btn btn-danger">Cancelar</a>
-            </form>
-        </div>
-        <div class="col"></div>
+    <div class="container">
+        <hr>
+        <h2>Crear Viaje</h2>
+        <form method="POST" action="<%=request.getContextPath()%>/ViajesServlet?action=guardar">
+            <div class="form-group">
+                <label for="FechaReserva">Fecha de Reserva:</label>
+                <input type="date" class="form-control" id="FechaReserva" name="FechaReserva" placeholder="Ingrese la fecha de reserva" required>
+            </div>
+            <div class="form-group">
+                <label for="FechaViaje">Fecha de Viaje:</label>
+                <input type="date" class="form-control" id="FechaViaje" naem="FechaViaje" placeholder="Ingrese la fecha de viaje" required>
+            </div>
+            <div class="form-group">
+                <label for="CiudadOrigen">Ciudad de Origen:</label>
+                <input type="text" class="form-control" id="CiudadOrigen" name="CiudadOrigen" placeholder="Ingrese la ciudad de origen" required>
+            </div>
+            <div class="form-group">
+                <label for="CiudadDestino">Ciudad de Destino:</label>
+                <input type="text" class="form-control" id="CiudadDestino" name="CiudadDestino" placeholder="Ingrese la ciudad de destino" required>
+            </div>
+            <div class="form-group">
+                <label for="EmpresaSeguro">Empresa de Seguro:</label>
+                <select required name="EmpresaSeguro" id="EmpresaSeguro" placeholder="Seguro" class="form-control">
+                    <option value="">Seleccione una opción</option>
+                    <%for (int i=0;i<=listaSeguros.size()-1;i++){%>
+                    <option value="<%=listaSeguros.get(i)%>"><%=listaSeguros.get(i)%></option>
+                    <%}%>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="CantBoleto">Número de Boletos:</label>
+                <input type="number" class="form-control" id="CantBoleto" name="CantBoleto" placeholder="Ingrese el número de boletos" required>
+            </div>
+            <div class="form-group">
+                <label for="CostoTotal">Costo Total del Viaje:</label>
+                <input type="number" class="form-control" id="CostoTotal" name="CostoTotal" placeholder="Ingrese el costo total" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="<%=request.getContextPath()%>/ViajesServlet" class="btn btn-danger">Cancelar</a>
+        </form>
     </div>
-</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -65,7 +77,25 @@
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>-->
+<script>
+    function validarFormulario() {
+        var cantBoletos = parseInt(document.getElementById("CantBoletos").value);
+        var costoTotal = parseInt(document.getElementById("CostoTotal").value);
+
+        if (isNaN(cantBoletos) || cantBoletos <= 0) {
+            alert("Cantidad no válida");
+            return false;
+        }
+
+        if (isNaN(costoTotal) || costoTotal <= 0) {
+            alert("Lo ingresado no es válido");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 </body>
 </html>
 

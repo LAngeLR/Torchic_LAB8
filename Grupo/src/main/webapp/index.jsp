@@ -65,7 +65,7 @@
                                         <div class="form-group">
                                         </div>
 
-                                        <a class="btn btn-primary btn-control btn-block">
+                                        <a href="<%=request.getContextPath()%>/ViajesServlet" class="btn btn-primary btn-control btn-block">
                                             Login
                                         </a>
                                         <hr>

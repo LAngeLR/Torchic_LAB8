@@ -2,6 +2,8 @@ package Daos;
 
 import Beans.Viajes;
 import Beans.Usuario;
+import Servlets.ViajesServlet;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -35,7 +37,6 @@ public class ViajesDao extends BaseDao{
     }
 
     private void fetchViajesData(Viajes viaje, ResultSet rs) throws SQLException {
-
         viaje.setIdViaje(rs.getInt(1));
         viaje.setFechaReserva(rs.getDate(2));
         viaje.setFechaViaje(rs.getDate(3));
@@ -44,20 +45,7 @@ public class ViajesDao extends BaseDao{
         viaje.setEmpresaSeguro(rs.getString(6));
         viaje.setCantBoletos(rs.getInt(7));
         viaje.setCostoTotal(rs.getInt(8));
-        viaje.setEmpresaSeguro(rs.getString(6));
 
-        Usuario usuario = new Usuario();
-
-        usuario.setNombre(rs.getString(11));
-        usuario.setApellido(rs.getString(12));
-        usuario.setEdad(rs.getInt(13));
-        usuario.setCodigopucp(rs.getString(10));
-        usuario.setCorreopucp(rs.getString(14));
-        usuario.setEspecialidad(rs.getString(15));
-        usuario.setContrasenia(rs.getString(16));
-        usuario.setStatus(rs.getString(17));
-
-        viaje.setUsuario(usuario);
     }
 
     public ArrayList<Viajes> busquedaCiudadOrigen(String ciudadOrigen) {
